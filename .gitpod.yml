@@ -1,4 +1,5 @@
-image: laurentdoguin/gitpod-workspacefull-couchbase
+image:
+  file: .gitpod.Dockerfile
 
 tasks:
   - init: |

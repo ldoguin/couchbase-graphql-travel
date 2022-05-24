@@ -1,0 +1,16 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "scripts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brantburnett/couchbasefakeit"
+  },
+  "main": "is-the-bucket-ready.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "couchbase": "2.6.12",
+    "fakeit": "1.4.0"
+  }
+}
