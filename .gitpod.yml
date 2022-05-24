@@ -1,4 +1,5 @@
-image: docker.io/laurentdoguin/gitpod-workspacefull-couchbase:latest
+#image: docker.io/laurentdoguin/gitpod-workspacefull-couchbase:latest
+image: ubuntu:latest
 
 tasks:
   - init: |
