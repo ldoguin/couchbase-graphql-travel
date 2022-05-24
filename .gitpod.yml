@@ -1,4 +1,4 @@
-image: laurentdoguin/gitpod-workspacefull-couchbase:latest
+image: docker.io/laurentdoguin/gitpod-workspacefull-couchbase:latest
 tasks:
   - init: |
       npm install
