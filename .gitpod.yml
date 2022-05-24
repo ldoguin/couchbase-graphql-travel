@@ -1,0 +1,6 @@
+image: laurentdoguin/gitpod-workspacefull-couchbase:latest
+tasks:
+  - init: |
+      npm install
+  - command: |
+      node index.js
