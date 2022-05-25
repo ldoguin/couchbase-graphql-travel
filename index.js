@@ -7,38 +7,100 @@ var couchbase = require('couchbase')
 const typeDefs = gql`
   # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
 
-  # This "Book" type defines the queryable fields for every book in our data source.
-  type Book {
-    title: String
-    author: String
+  type Airline {
+    id: Int
+    type: String
+    name: String
+    iata: String
+    icao: String
+    callsign: String
+    country: String
   }
 
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
+  type Route {
+      id: String
+      typeairline: String
+      airline: Airline
+      sourceairport: Airport
+      destinationairport: String
+      stops: String
+      equipment: String
+      schedule: [Schedule]
+  }
+
+  type Schedule {
+      day: Int
+      utc: String
+      flight: String
+  }
+
+  type Airport {
+      id: String
+      type: String
+      airportname: String
+      city: String
+      country: String
+      faa: String
+      icao: String
+      tz: String
+      geo: Geo
+  }
+
+  type Geo {
+      lat: Float
+      lon: Float
+      alt: Int
+  }
+
+  type Hotel {
+    address: String
+    checkin: String
+    checkou: String
+    city: String
+    country: String
+    description: String
+    free_breakfast: Boolean
+    free_internet: Boolean,
+    free_parking: Boolean
+    geo: Geo
+    id: Int
+    name: String
+    pets_ok: Boolean
+    price: String
+    state: String
+    type: String
+    url: String
+    vacancy: Boolean
+  }
+  
   type Query {
-    books: [Book]
+    airports: [Airport]
+    airlines: [Airline]
+    hotels: [Hotel]
+    routes: [Route]
   }
 `;
 
-const books = [
-  {
-    title: 'The Awakening',
-    author: 'Kate Chopin',
-  },
-
-  {
-    title: 'City of Glass',
-    author: 'Paul Auster',
-  },
-];
-
-// Resolvers define the technique for fetching the types defined in the
-// schema. This resolver retrieves books from the "books" array above.
 const resolvers = {
   Query: {
-    books: () => books,
+    airports: () => queryAllByType('airport'),
+    airlines: () => queryAllByType('airline'),
+    hotels: () => queryAllByType('hotel'),
+    routes: () => queryAllByType('route'),
   },
+  Route: {
+    async airline(parent) {
+      // const airline = await queryCluster(`Select t.* FROM \`travel-sample\` as t  where META().id = "${parent.airlineid}"`);
+      const doc = await getDoc(parent.airlineid);
+      return doc;
+    },
+    async sourceairport(parent) {
+      const airport = await queryCluster(`Select t.* FROM \`travel-sample\` as t  where type = "airport" AND faa = "${parent.sourceairport}"`);
+      return airport[0];
+    },
+
+
+  }
 };
 
 // The ApolloServer constructor requires two parameters: your schema
@@ -51,27 +113,53 @@ const server = new ApolloServer({
 
 
 // Connect to Couchbase Cluster
+
+async function getDoc(docId){
+  console.log("getDoc " + docId);
+  return cluster().then(async (cluster) => {
+    const bucket = cluster.bucket("travel-sample");
+    const defaultCollection = bucket.defaultCollection();
+    const doc = await defaultCollection.get(docId);
+    return doc.content;
+}, (reject) => {console.log(reject)})
+}
+
+
+async function queryCluster(n1qlQuery){
+    return cluster().then(async (cluster) => {
+        const airports = await cluster.query(n1qlQuery)
+       return airports.rows;
+    })
+}
+
+
+async function queryAllByType(type){
+    return queryCluster(`select \`travel-sample\`.* from \`travel-sample\` where type = "${type}" limit 10`)
+}
+
+async function cluster() {
+
   // For a secure cluster connection, use `couchbases://<your-cluster-ip>` instead.
   const clusterConnStr = 'couchbase://localhost'
   const username = 'Administrator'
   const password = 'Administrator'
-  const bucketName = 'beer-sample'
+  const bucketName = 'travel-sample'
 
   const cluster = await couchbase.connect(clusterConnStr, {
     username: username,
     password: password
   })
 
+  return cluster;
 
-  const bucket = cluster.bucket(bucketName)
-  
-  // Get a reference to the default collection, required only for older Couchbase server versions
-  const collection_default = bucket.defaultCollection()
+}
 
-  
+
 // The `listen` method launches a web server.
 server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
+    console.log(`🚀  Server ready at ${url}`);
+  });
+  
+  
 
-
+  
