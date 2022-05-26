@@ -1,12 +1,12 @@
 image: laurentdoguin/gitpod-workspacefull-couchbase
 
 tasks:
-  - name: Start Couchbase Server
-    init: |
-      sudo runsvdir -P /etc/service 
   - name: Install dependencies
     init: |
       npm install
+  - name: Start Couchbase Server
+    command: |
+      sudo runsvdir -P /etc/service
   - name: Start Server
     command: |
       gp await-port 8091
