@@ -12,6 +12,7 @@
   "dependencies": {
     "apollo-server": "3.7.0",
     "couchbase": "^4.1.0",
-    "graphql": "^16.5.0"
+    "graphql": "^16.5.0",
+    "node-addon-api": "^5.0.0"
   }
 }
