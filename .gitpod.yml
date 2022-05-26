@@ -3,7 +3,7 @@ image: laurentdoguin/gitpod-workspacefull-couchbase
 tasks:
   - name: Install dependencies
     init: |
-      npm install && gp sync-done installdep
+      sudo rm -rf ~/.npm/ && npm install && gp sync-done installdep
   - name : Import Couchbase sample bucket
     command: |
       gp await-port 8091
@@ -62,6 +62,12 @@ ports:
 - port: 9101
   onOpen: ignore
 - port: 9102
+  onOpen: ignore
+- port: 9103
+  onOpen: ignore
+- port: 9104
+  onOpen: ignore
+- port: 9105
   onOpen: ignore
 - port: 9110
   onOpen: ignore
