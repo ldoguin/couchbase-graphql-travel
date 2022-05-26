@@ -19,6 +19,8 @@ tasks:
 
 # exposed ports
 ports:
+- port: 4000 # NodeJS Apollo Server
+  onOpen: open-preview
 - port: 8091 # Couchbase Web console, REST/HTTP interface
   onOpen: open-preview
 - port: 8092 # Views, queries, XDCR
@@ -55,42 +57,67 @@ ports:
   onOpen: ignore
 - port: 6942
   onOpen: ignore
-- port: 9100-9999
+- port: 9100
   onOpen: ignore
-- port: 11206-9999
+- port: 9101
   onOpen: ignore
-4369
-5990
-6942
-9100
-9101
-9102
-9110
-9111
-9112
-9113
-9115
-9116
-9117
-9118
-9119
-9120
-9121
-9122
-9123
-9130
-9998
-9999
-11206
-11209
-11280
-19102
-19130
-21100
-21200
-21300
-36173
-39969
-41135
-41209
-63342
+- port: 9102
+  onOpen: ignore
+- port: 9110
+  onOpen: ignore
+- port: 9111
+  onOpen: ignore
+- port: 9112
+  onOpen: ignore
+- port: 9113
+  onOpen: ignore
+- port: 9115
+  onOpen: ignore
+- port: 9116
+  onOpen: ignore
+- port: 9117
+  onOpen: ignore
+- port: 9118
+  onOpen: ignore
+- port: 9119
+  onOpen: ignore
+- port: 9120
+  onOpen: ignore
+- port: 9121
+  onOpen: ignore
+- port: 9122
+  onOpen: ignore
+- port: 9123
+  onOpen: ignore
+- port: 9130
+  onOpen: ignore
+- port: 9998
+  onOpen: ignore
+- port: 9999
+  onOpen: ignore
+- port: 11206
+  onOpen: ignore
+- port: 11209
+  onOpen: ignore
+- port: 11280
+  onOpen: ignore
+- port: 19102
+  onOpen: ignore
+- port: 19130
+  onOpen: ignore
+- port: 21100
+  onOpen: ignore
+- port: 21200
+  onOpen: ignore
+- port: 21300
+  onOpen: ignore
+- port: 36173
+  onOpen: ignore
+- port: 39969
+  onOpen: ignore
+- port: 41135
+  onOpen: ignore
+- port: 41209
+  onOpen: ignore
+- port: 63342
+  onOpen: ignore
