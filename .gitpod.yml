@@ -4,6 +4,10 @@ tasks:
   - name: Install dependencies
     init: |
       npm install && gp sync-done installdep
+  - name : Import Couchbase sample bucket
+    command: |
+      gp await-port 8091
+      CB_SAMPLES='["travel-sample"]' /scripts/import-sample-buckets.sh
   - name: Start Couchbase Server
     command: |
       sudo runsvdir -P /etc/service
@@ -45,3 +49,48 @@ ports:
   onOpen: ignore
 - port: 18096 # Eventing (SSL) (5.5+)
   onOpen: ignore
+- port: 4369
+  onOpen: ignore
+- port: 5990
+  onOpen: ignore
+- port: 6942
+  onOpen: ignore
+- port: 9100-9999
+  onOpen: ignore
+- port: 11206-9999
+  onOpen: ignore
+4369
+5990
+6942
+9100
+9101
+9102
+9110
+9111
+9112
+9113
+9115
+9116
+9117
+9118
+9119
+9120
+9121
+9122
+9123
+9130
+9998
+9999
+11206
+11209
+11280
+19102
+19130
+21100
+21200
+21300
+36173
+39969
+41135
+41209
+63342
