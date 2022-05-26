@@ -3,11 +3,12 @@ image: laurentdoguin/gitpod-workspacefull-couchbase
 tasks:
   - name: Install dependencies
     init: |
-      npm install
+      npm install && gp sync-done installdep
   - name: Start Couchbase Server
     command: |
       sudo runsvdir -P /etc/service
   - name: Start Server
+    init: gp sync-await installdep
     command: |
       gp await-port 8091
       node index.js
