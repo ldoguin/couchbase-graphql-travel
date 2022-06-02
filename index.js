@@ -184,7 +184,7 @@ async function cursorQueryAllByType(parent, args, context, info, type){
 }
 
 async function offsetAfterQuery(cluster, flattenTopFields, type, first, after) {
-  if (!after) after = 10;
+  if (!first) first = 10;
   const q = `
               SELECT Meta().id as cursor, {${flattenTopFields}} as node
               FROM \`travel-sample\`
@@ -240,14 +240,13 @@ async function offsetBeforeQuery(cluster, flattenTopFields, type, last, before) 
   var edges = queryAnswer.rows;
 
   var hasPreviousPage;
-  var hasNextPage = true
+  var hasNextPage = false;
   if (before) {
-    if (edges[edges.length - 1].cursor == before) {
+    if (edges[0].cursor == before) {
       hasNextPage = true;
       edges.splice(0,1);
     } else if (edges.length == last + 2 ) {
       edges.splice(-1)
-      hasNextPage = false;
     }
   }
   if (edges.length > last) {
