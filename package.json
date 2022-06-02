@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -13,6 +14,10 @@
     "apollo-server": "3.7.0",
     "couchbase": "^4.1.0",
     "graphql": "^16.5.0",
+    "graphql-fields": "^2.0.3",
     "node-addon-api": "^5.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
   }
 }
