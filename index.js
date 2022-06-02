@@ -52,7 +52,8 @@ const typeDefs = gql`
   type Route {
       id: String
       type: String
-      airline: Airline
+      airline: String
+      airlineid: Airline
       sourceairport: Airport
       destinationairport: String
       stops: String
@@ -121,7 +122,7 @@ const resolvers = {
     routes: (parent, args, context, info) => cursorQueryAllByType(parent, args, context, info, 'route'),
   },
   Route: {
-    async airline(parent) {
+    async airlineid(parent) {
       // const airline = await queryCluster(`Select t.* FROM \`travel-sample\` as t  where META().id = "${parent.airlineid}"`);
       // Use a K/V get instead of a N1QL query
       const doc = await getDoc(parent.airlineid);
