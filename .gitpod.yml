@@ -15,7 +15,7 @@ tasks:
     init: gp sync-await installdep
     command: |
       gp await-port 8091
-      node index.js
+      npm run dev
 
 # exposed ports
 ports:
